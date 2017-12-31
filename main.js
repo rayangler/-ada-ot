@@ -22,7 +22,9 @@ client.on('message', message => {
     message.channel.send(":b:adaNasty");
   }
   if (input.includes("how's badabusiness") ||
-      input.includes("hows badabusiness") ) {
+      input.includes("hows badabusiness") ||
+      input.includes("how's bada business") ||
+      input.includes("hows bada business") ) {
     message.channel.send(":b:ada:b:oomin'");
   }
   
