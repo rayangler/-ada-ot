@@ -7,7 +7,7 @@ client.on('ready', () => {
 
 client.on('message', () => {
   if (message.content.toLowerCase() == "badabing") {
-    message.channel.send("🅱ada🅱oom");
+    message.channel.send("Badaboom");
   }
 });
 
