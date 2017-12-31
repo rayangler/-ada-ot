@@ -7,7 +7,7 @@ client.on('ready', () => {
 
 client.on('message', message => {
   if (message.content == "badabing") {
-    message.channel.send("🅱ada🅱oom");
+    message.channel.send("Badaboom");
   }
 });
 
