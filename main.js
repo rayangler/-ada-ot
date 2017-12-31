@@ -23,7 +23,7 @@ client.on('message', message => {
   }
   if (input.includes("how's badabusiness") ||
       input.includes("hows badabusiness") ) {
-    message.channel.send(":b:ada:b:oomin'"
+    message.channel.send(":b:ada:b:oomin'");
   }
   
   // Misc. Commands
