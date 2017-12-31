@@ -6,12 +6,20 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-  if (message.content.toLowerCase() == "badabing") {
+  var input = message.content.toLowerCase();
+  
+  if (input == "badabing" ||
+      input == "bada bing") {
     message.channel.send(":b:ada:b:oom");
   }
-  if (message.content == "badabot creator") {
+  if (input == "badaboom" ||
+      input == "bada boom") {
+    message.channel.send(":b:ada:b:ing");
+  }
+  if (input == "badabot creator") {
     message.channel.send("My creator is none other than Raymund. You're welcome.");
   }
+  
 });
 
 client.login(process.env.BOT_TOKEN);
