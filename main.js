@@ -70,7 +70,7 @@ client.on('message', message => {
   }
 
   // Patch notes
-  if (input == "badabooster pack") {
+  if (input == "badabooster pack" || input == "badaboosterpack") {
     message.channel.send(patchNotes.printPatchNotes(currentVersion));
   }
 
