@@ -48,7 +48,7 @@ module.exports = {
       response += yer[i].repeat(randomNumber());
     }
 
-    return response;
+    return response.toUpperCase();
   }
 
 }

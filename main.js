@@ -1,6 +1,9 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const functions = require('./functions');
+const patchNotes = require('./patchNotes');
+
+const currentVersion = 1.1;
 
 client.on('ready', () => {
   console.log('I am ready!');
@@ -64,6 +67,11 @@ client.on('message', message => {
   // Misc. Commands
   if (input == "badabot creator") {
     message.channel.send("My creator is none other than :b:aemund. You're welcome.");
+  }
+
+  // Patch notes
+  if (input == "badabooster pack") {
+    message.channel.send(patchNotes.printPatchNotes(currentVersion));
   }
 
 });
