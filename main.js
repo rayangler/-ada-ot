@@ -7,6 +7,11 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
+  // Prevents bot messages to be accepted
+  if (message.author.bot) {
+    return;
+  }
+
   var input = message.content.toLowerCase();
 
   // Basic Bada commands
