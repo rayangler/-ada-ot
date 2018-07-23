@@ -16,6 +16,7 @@ module.exports = {
       if ((message.length - i) < (yer.length - yerIndex)) {
         return false;
       }
+      // Progress is made
       if (message[i] == nextLetter) {
         // The nextLetter found is also the last letter of the trigger
         if (yerIndex == yer.length - 1) {
@@ -24,12 +25,16 @@ module.exports = {
         previousLetter = nextLetter;
         nextLetter = yer[++yerIndex];
       }
+      // Continuing the search
       else if (yerIndex === 0 ||
          message[i] == previousLetter || message[i] == " ") {
         continue;
       }
+      // Reset the search for yer
       else {
-        return false;
+        yerIndex = 0;
+        nextLetter = yer[yerIndex];
+        previousLetter = null;
       }
     }
   },
