@@ -11,10 +11,23 @@ const currentVersion = 1.1;
 function respond(message, command) {
   var response = commandsMap.get(command);
   message.channel.send(response);
-  if (message.member.voiceChannel) {
+  if (message.member.voiceChannel && command == "badabing") {
     voice.playCommand(message.member.voiceChannel, response);
+    voice.changeVoice("uk-male");
+  } else if (message.member.voiceChannel && command == "badaboom") {
+    voice.leave(message.member.voiceChannel);
+    voice.changeVoice("us-female");
   }
 }
+
+// Excludes yer
+var commandsList = ["badabing",
+                    "badaboom",
+                    "badabigballerbrand",
+                    "badabig",
+                    "howsbadabusiness",
+                    "badabam",
+                    "produc"];
 
 client.on('ready', () => {
   console.log('I am ready!');
@@ -27,48 +40,16 @@ client.on('message', message => {
   }
 
   var input = message.content.toLowerCase();
+  // Get rid of whitespace and apostrophes
+  input = input.split(" ").join("").split("'").join("");
   var channel = message.channel;
 
-  // Basic Bada commands
-  // BADABING
-  if (input.includes("badabing") ||
-      input.includes("bada bing") ) {
-    respond(message, "badabing");
-  }
-
-  // BADABOOM
-  if (input.includes("badaboom") ||
-      input.includes("bada boom") ) {
-    respond(message, "badaboom");
-  }
-
-  // BADABIGBALLERBRAND
-  if (input.includes("badabigballerbrand")) {
-    respond(message, "badabigballerbrand");
-  }
-
-  // BADABIG
-  else if (input.includes("badabig") ||
-      input.includes("bada big") ) {
-    respond(message, "badabig");
-  }
-
-  // HOW'S BADABUSINESS
-  if (input.includes("how's badabusiness") ||
-      input.includes("hows badabusiness") ||
-      input.includes("how's bada business") ||
-      input.includes("hows bada business") ) {
-    respond(message, "how's badabusiness");
-  }
-
-  // BADABAM
-  if (input.includes("badabam")) {
-    respond(message, "badabam");
-  }
-
-  // PRODUC-
-  if (input.includes("produc")) {
-    respond(message, "produc");
+  for (var i = 0; i < commandsList.length; i++) {
+    var command = commandsList[i];
+    if (command == "badabig" && input.includes("badabigballerbrand")) continue;
+    if (input.includes(command)) {
+      respond(message, command);
+    }
   }
 
   // YER
