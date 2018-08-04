@@ -11,13 +11,6 @@ const currentVersion = 1.1;
 function respond(message, command) {
   var response = commandsMap.get(command);
   message.channel.send(response);
-  if (message.member.voiceChannel && command == "badabing") {
-    voice.playCommand(message.member.voiceChannel, response);
-    voice.changeVoice("uk-male");
-  } else if (message.member.voiceChannel && command == "badaboom") {
-    voice.leave(message.member.voiceChannel);
-    voice.changeVoice("us-female");
-  }
 }
 
 // Excludes yer
