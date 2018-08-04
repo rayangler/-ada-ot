@@ -3,13 +3,17 @@ const client = new Discord.Client();
 
 const yer = require('./yer');
 const patchNotes = require('./patchNotes');
-// const voice = require('./voice');
+const voice = require('./voice');
 const commandsMap = require('./commands');
 
 const currentVersion = 1.1;
 
-function respond(message, response) {
+function respond(message, command) {
+  var response = commandsMap.get(command);
   message.channel.send(response);
+  if (message.member.voiceChannel) {
+    // voice.playCommand(message.member.voiceChannel, response);
+  }
 }
 
 client.on('ready', () => {
@@ -23,30 +27,30 @@ client.on('message', message => {
   }
 
   var input = message.content.toLowerCase();
+  var channel = message.channel;
 
   // Basic Bada commands
   // BADABING
   if (input.includes("badabing") ||
       input.includes("bada bing") ) {
-    //message.channel.send(":b:ada:b:oom");
-    respond(input, commandsMap.get("badabing"));
+    respond(message, "badabing");
   }
 
   // BADABOOM
   if (input.includes("badaboom") ||
       input.includes("bada boom") ) {
-    message.channel.send(":b:ada:b:ing");
+    respond(message, "badaboom");
   }
 
   // BADABIGBALLERBRAND
   if (input.includes("badabigballerbrand")) {
-    message.channel.send(":b:ada:b:igDickEnergy");
+    respond(message, "badabigballerbrand");
   }
 
   // BADABIG
   else if (input.includes("badabig") ||
       input.includes("bada big") ) {
-    message.channel.send(":b:adaNasty");
+    respond(message, "badabig");
   }
 
   // HOW'S BADABUSINESS
@@ -54,17 +58,17 @@ client.on('message', message => {
       input.includes("hows badabusiness") ||
       input.includes("how's bada business") ||
       input.includes("hows bada business") ) {
-    message.channel.send(":b:ada:b:oomin'");
+    respond(message, "how's badabusiness");
   }
 
   // BADABAM
   if (input.includes("badabam")) {
-    message.channel.send(":b:adaslam");
+    respond(message, "badabam");
   }
 
   // PRODUC-
   if (input.includes("produc")) {
-    message.channel.send("Metro :b:ada:b:oomin'");
+    respond(message, "produc");
   }
 
   // YER
