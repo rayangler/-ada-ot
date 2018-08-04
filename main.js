@@ -3,7 +3,7 @@ const client = new Discord.Client();
 
 const yer = require('./yer');
 const patchNotes = require('./patchNotes');
-const voice = require('./voice');
+// const voice = require('./voice');
 const commandsMap = require('./commands');
 
 const currentVersion = 1.1;
