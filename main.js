@@ -1,9 +1,16 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const functions = require('./functions');
+
+const yer = require('./yer');
 const patchNotes = require('./patchNotes');
+const voice = require('./voice');
+const commandsMap = require('./commands');
 
 const currentVersion = 1.1;
+
+function respond(message, response) {
+  message.channel.send(response);
+}
 
 client.on('ready', () => {
   console.log('I am ready!');
@@ -21,7 +28,8 @@ client.on('message', message => {
   // BADABING
   if (input.includes("badabing") ||
       input.includes("bada bing") ) {
-    message.channel.send(":b:ada:b:oom");
+    //message.channel.send(":b:ada:b:oom");
+    respond(input, commandsMap.get("badabing"));
   }
 
   // BADABOOM
@@ -60,8 +68,8 @@ client.on('message', message => {
   }
 
   // YER
-  if (functions.findYer(input)) {
-    message.channel.send(functions.respondYer());
+  if (yer.findYer(input)) {
+    message.channel.send(yer.respondYer());
   }
 
   // Misc. Commands
