@@ -12,7 +12,7 @@ function respond(message, command) {
   var response = commandsMap.get(command);
   message.channel.send(response);
   if (message.member.voiceChannel) {
-    // voice.playCommand(message.member.voiceChannel, response);
+    voice.playCommand(message.member.voiceChannel, response);
   }
 }
 
