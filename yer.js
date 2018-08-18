@@ -26,8 +26,7 @@ module.exports = {
         nextLetter = yer[++yerIndex];
       }
       // Continuing the search
-      else if (yerIndex === 0 ||
-         message[i] == previousLetter || message[i] == " ") {
+      else if (yerIndex === 0 || message[i] == previousLetter) {
         continue;
       }
       // Reset the search for yer
