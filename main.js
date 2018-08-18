@@ -12,8 +12,8 @@ const currentVersion = 1.2;
 var commandsList = [
   "badabing",
   "badaboom",
-  "badabigballerbrand",
   "badabig",
+  "badabigballerbrand",
   "howsbadabusiness",
   "badabam",
   "produc",
