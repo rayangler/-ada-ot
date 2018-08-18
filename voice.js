@@ -25,7 +25,7 @@ function fixResponse(response) {
   var newResponse =  response.split(' ').join("") // Remove whitesspace
                              .split(':').join("") // Remove emoji indicator
                              .split("'").join(""); // Remove apostrophes
-  return newResponse
+  return newResponse.toLowerCase();
 }
 
 module.exports = {
