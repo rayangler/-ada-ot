@@ -10,7 +10,7 @@ function patch1_1() {
 
 function patch1_2() {
   return ("```md\n\
-|* BADABOT 1.2.1 BOOSTER PACK PATCH NOTES: *|\n\n\
+|* BADABOT 1.2.2 BOOSTER PACK PATCH NOTES: *|\n\n\
 + Have you ever wanted somebody to <badaboom> your <badabing> out loud? Probably not. \
 Hop into a <Voice Channel> with your friends and bots anyways.\n\
 + Tired of always hearing the same voice? See if you can get a <badavoicechange>.\n\
@@ -18,7 +18,9 @@ Hop into a <Voice Channel> with your friends and bots anyways.\n\
 to figure it out.\n\
 \n* Improved code maintainability. (Even though you can't really tell, but at \
 least you know.)\n\
-* Fixed some badabugs with the badabig command.\
+* Fixed some badabugs with the badabig command.\n\
+* Badabot no longer dies when given commands from multiple people in a voice \
+channel at the same time. (He might need some time to figure out what to say next though.)\
 ```");
 }
 

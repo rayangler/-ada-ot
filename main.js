@@ -34,7 +34,7 @@ function checkForBadaCommands(message, input, voiceChannel) {
   }
 
   // After the badacommands are done:
-  if (voiceChannel && !voice.voiceQueueEmpty()) {
+  if (voiceChannel) {
     voice.playResponse(voiceChannel);
   }
 }
@@ -67,7 +67,7 @@ client.on('message', message => {
   var input = message.content.toLowerCase();
   // Get rid of whitespace and apostrophes
   input = input.split(" ").join("").split("'").join("");
-  console.log("Message: " + input);
+  console.log(`Message: ${input} sent by ${message.author}.`);
 
   if (input == "badaleave" && voiceChannel) {
     voice.leave(voiceChannel);
@@ -81,6 +81,7 @@ client.on('message', message => {
   else if (input == "badaboosterpack" || input == "badapatchnotes") {
     message.channel.send(patchNotes.printPatchNotes(currentVersion));
   }
+  // Easter Egg Command 1
   else if (input == "clickclack" && voiceChannel) {
     voice.clickclack(input);
     voice.playResponse(voiceChannel);
@@ -92,4 +93,5 @@ client.on('message', message => {
 });
 
 
-client.login(process.env.BOT_TOKEN);
+//client.login(process.env.BOT_TOKEN);
+client.login("Mzk2ODgwNDI5OTI5NzI1OTU0.DSoBlg.YrLoJg8wpcYKD7s5zj-niYzzs7Q");

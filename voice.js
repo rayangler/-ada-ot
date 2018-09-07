@@ -7,6 +7,7 @@ var voices = [
 ];
 var voiceIndex = 0; // Start at 0
 var voice = voices[voiceIndex]; // The sound of badabot in the voice channel
+var isPlaying = false;
 
 var voiceQueue = []; // Queue of voice files
 
@@ -14,9 +15,14 @@ var voiceQueue = []; // Queue of voice files
 function playVoiceQueue(connection) {
   var voiceFile = voiceQueue.shift();
   var dispatcher = connection.playFile(voiceFile);
+  console.log("Playing voice file: " + voiceFile);
   dispatcher.on('end', () => {
     if (voiceQueue[0]) playVoiceQueue(connection);
-    else connection.disconnect();
+    else {
+      isPlaying = false;
+      connection.disconnect();
+      console.log("End of dispatcher connection");
+    }
   });
 }
 
@@ -31,8 +37,10 @@ function fixResponse(response) {
 module.exports = {
   // Play the voice files in voiceQueue
   playResponse: function(voiceChannel) {
+    if (isPlaying) return;
     voiceChannel.join()
       .then(connection => {
+        isPlaying = true;
         playVoiceQueue(connection);
       })
       .catch(console.error);
