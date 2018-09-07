@@ -55,6 +55,15 @@ function respond(message, command) {
   }
 }
 
+function tryYeet(channel) {
+  var chance = Math.floor(Math.random() * 100); // 0 to 99 (inclusive)
+  // 5% chance to randomly say yeet every message
+  if (chance < 5) {
+    console.log("Yeet: calculated.");
+    channel.send("Yeet");
+  }
+}
+
 client.on('ready', () => {
   console.log('I am ready!');
 });
@@ -90,8 +99,9 @@ client.on('message', message => {
     checkForBadaCommands(message, input, voiceChannel);
   }
 
+  tryYeet(message.channel);
+
 });
 
 
-//client.login(process.env.BOT_TOKEN);
-client.login("Mzk2ODgwNDI5OTI5NzI1OTU0.DSoBlg.YrLoJg8wpcYKD7s5zj-niYzzs7Q");
+client.login(process.env.BOT_TOKEN);
