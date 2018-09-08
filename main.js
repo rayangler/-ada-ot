@@ -34,7 +34,7 @@ function checkForBadaCommands(message, input, voiceChannel) {
   }
 
   // After the badacommands are done:
-  if (voiceChannel && !voiceQueueEmpty()) {
+  if (voiceChannel && !voice.voiceQueueEmpty()) {
     voice.playResponse(voiceChannel);
   }
 }
