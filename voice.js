@@ -66,9 +66,10 @@ module.exports = {
   addToQueue: function(response) {
     var newResponse = fixResponse(response);
     var voiceFile = `./voices/${voice}/${newResponse}.mp3`;
-
-    voiceQueue.push(voiceFile);
-    console.log(voiceFile + " added to queue");
+    if (voiceFile) {
+      voiceQueue.push(voiceFile);
+      console.log(voiceFile + " added to queue");
+    }
   },
 
   // Returns true if there are no files in the voice queue
