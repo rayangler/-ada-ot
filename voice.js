@@ -68,7 +68,7 @@ module.exports = {
     var voiceFile = `./voices/${voice}/${newResponse}.mp3`;
     if (voiceFile) {
       voiceQueue.push(voiceFile);
-      console.log(voiceFile + " added to queue");
+      console.log(voiceFile + " added to queue");  
     }
   },
 
