@@ -7,7 +7,7 @@ const voice = require('./voice');
 const commandsMap = require('./commands');
 const servers = require('./servers');
 
-const currentVersion = 1.2;
+const currentVersion = 2.0;
 
 // The standard Bada Commands
 var commandsList = [
@@ -55,8 +55,8 @@ function checkForBadaCommands(serverId, textChannel, input, voiceChannel) {
 }
 
 function tryYeet(channel) {
-  var chance = Math.floor(Math.random() * 100); // 0 to 99 (inclusive)
-  // 5% chance to randomly say yeet every message
+  var chance = Math.floor(Math.random() * 200); // 0 to 199 (inclusive)
+  // 0.5% chance to randomly say yeet every message
   if (chance < 1) {
     channel.send("Yeet");
   }
