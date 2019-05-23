@@ -5,6 +5,7 @@ const yer = require('./yer');
 const patchNotes = require('./patchNotes');
 const voice = require('./voice');
 const commandsMap = require('./commands');
+const servers = require('./servers');
 
 const currentVersion = 1.2;
 
@@ -20,46 +21,43 @@ var commandsList = [
   "yer"
 ];
 
-function checkForBadaCommands(message, input, voiceChannel) {
-  for (var i = 0; i < commandsList.length; i++) {
-    var command = commandsList[i];
-    if (command == "badabig" && input.includes("badabigballerbrand")) continue;
-    if (command == "yer" && yer.findYer(input)) {
-      respond(message, command);
-      continue;
-    }
-    if (input.includes(command)) {
-      respond(message, command);
-    }
+/* Takes a response to a badacommand and handles printing it appropriately. */
+function printMessage(channel, response) {
+  if (response == 'yer') {
+    channel.send(yer.respondYer());
+    return;
   }
-
-  // After the badacommands are done:
-  if (voiceChannel && !voice.voiceQueueEmpty()) {
-    voice.playResponse(voiceChannel);
-  }
+  let newResponse = response.replace(/b/g, ':b:');
+  channel.send(newResponse);
 }
 
-// Determines what to do with the Bada Command
-function respond(message, command) {
-  var response = commandsMap.get(command);
-
-  if (command == "yer") {
-    message.channel.send(yer.respondYer());
+function prepResponse(serverId, textChannel, voiceChannel, response) {
+  if (voiceChannel) {
+    voice.addToQueue(serverId, response);
   }
-  else {
-    message.channel.send(response);
+  printMessage(textChannel, response);
+}
+
+function checkForBadaCommands(serverId, textChannel, input, voiceChannel) {
+  for (var i = 0; i < commandsList.length; i++) {
+    var command = commandsList[i];
+    if (command == "badabig" && input.includes("badabigballerbrand")) {
+      continue;
+    }
+    else if ((command == "yer" && yer.findYer(input)) || input.includes(command)) {
+      prepResponse(serverId, textChannel, voiceChannel, commandsMap.get(command));
+    }
   }
 
-  if (message.member.voiceChannel) {
-    voice.addToQueue(response);
+  if (voiceChannel) {
+      voice.playResponse(serverId, voiceChannel);
   }
 }
 
 function tryYeet(channel) {
   var chance = Math.floor(Math.random() * 100); // 0 to 99 (inclusive)
   // 5% chance to randomly say yeet every message
-  if (chance < 5) {
-    console.log("Yeet: calculated.");
+  if (chance < 1) {
     channel.send("Yeet");
   }
 }
@@ -72,17 +70,16 @@ client.on('message', message => {
   // Prevents bot messages to be accepted
   if (message.author.bot) return;
 
+  // Remove all ' and whitespace, while making the message all lowercase.
+  var input = message.content.toLowerCase().replace(/ |'/g, '');
   var voiceChannel = message.member.voiceChannel;
-  var input = message.content.toLowerCase();
-  // Get rid of whitespace and apostrophes
-  input = input.split(" ").join("").split("'").join("");
-  console.log(`Message: ${input} sent by ${message.author}.`);
-
-  if (input == "badaleave" && voiceChannel) {
-    voice.leave(voiceChannel);
+  var serverId = message.guild.id;
+  if (!servers.get(serverId)) {
+    servers.newServer(serverId);
   }
-  else if (input == "badachangevoice" || input == "badavoicechange") {
-    voice.changeVoice(message.channel);
+
+  if (input == "badachangevoice" || input == "badavoicechange") {
+    voice.changeVoice(serverId, message.channel);
   }
   else if (input == "badabotcreator") {
     message.channel.send("My creator is none other than :b:aemund. You're welcome.");
@@ -92,11 +89,11 @@ client.on('message', message => {
   }
   // Easter Egg Command 1
   else if (input == "clickclack" && voiceChannel) {
-    voice.clickclack(input);
-    voice.playResponse(voiceChannel);
+    voice.clickclack(serverId, input);
+    voice.playResponse(serverId, voiceChannel);
   }
   else {
-    checkForBadaCommands(message, input, voiceChannel);
+    checkForBadaCommands(serverId, message.channel, input, voiceChannel);
   }
 
   tryYeet(message.channel);
@@ -104,4 +101,5 @@ client.on('message', message => {
 });
 
 
-client.login(process.env.BOT_TOKEN);
+//client.login(process.env.BOT_TOKEN);
+client.login('Mzk2ODgwNDI5OTI5NzI1OTU0.DnSFAw.VLlw3r8xJ0up3m41yH7_CwetfsQ');
