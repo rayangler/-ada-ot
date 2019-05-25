@@ -7,6 +7,7 @@ var voices = [
   "us-female"
 ];
 
+// Returns the current voice at a given server
 function getVoice(serverId) {
   return voices[servers.get(serverId).voiceId];
 }
@@ -16,12 +17,22 @@ function playVoiceQueue(serverId, connection) {
   var voiceFile = servers.nextInQueue(serverId);
   var dispatcher = connection.playFile(voiceFile);
 
-  // When the voice file triggers 'end' event, check if it should still play.
+  // Voice file has ended
   dispatcher.on('end', () => {
-    if (servers.getQueue(serverId)[0]) playVoiceQueue(serverId, connection);
+    // Play next file
+    if (servers.getQueue(serverId)[0]) {
+      playVoiceQueue(serverId, connection);
+    }
+    // No more files to play
     else {
-      connection.disconnect();
-      servers.changePlaying(serverId);
+      servers.setPlayingFalse(serverId);
+
+      // Wait 3 seconds. If nothing is playing, leave the voice channel
+      setTimeout(() => {
+        if (servers.isPlaying(serverId) == false) {
+          connection.disconnect();
+        }
+      }, 5000);
     }
   });
 }
@@ -34,14 +45,15 @@ function fixResponse(response) {
 module.exports = {
   // Play the voice files in voiceQueue
   playResponse: function(serverId, voiceChannel) {
+    // Bot is already playing
     if (servers.isPlaying(serverId)) {
       return;
     }
 
     voiceChannel.join()
       .then(connection => {
+        servers.setPlayingTrue(serverId);
         playVoiceQueue(serverId, connection);
-        servers.changePlaying(serverId);
       })
       .catch(console.error);
   },
@@ -50,14 +62,14 @@ module.exports = {
   changeVoice: function(serverId, channel) {
     var voiceIndex = servers.get(serverId).voiceId;
 
-    // Reset voiceIndex
+    // Reset voice index to 0 to loop around
     if (++voiceIndex >= voices.length) {
       voiceIndex = 0;
     }
 
     let voice = voices[voiceIndex];
-    channel.send(`Voice changed to: **${voice}**`);
     servers.setVoiceId(serverId, voiceIndex);
+    channel.send(`Voice changed to: **${voice}**`);
   },
 
   // Adds the response of the Bada Command to the voice queue
